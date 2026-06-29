@@ -13,8 +13,15 @@ from __future__ import annotations
 
 import os
 
+# Load .env file if python-dotenv is available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-def get_llm(model: str | None = None, temperature: float = 0.0):
+
+def get_llm(model: str | None = None, temperature: float | None = None):
     """Create an LLM client from environment configuration.
 
     Checks for API keys in this order:
@@ -22,15 +29,20 @@ def get_llm(model: str | None = None, temperature: float = 0.0):
     2. OPENAI_API_KEY → ChatOpenAI
     3. ANTHROPIC_API_KEY → ChatAnthropic
 
-    Override model with the `model` parameter or LLM_MODEL env var.
+    Override model with the `model` parameter or GEMINI_MODEL/LLM_MODEL env var.
     """
+    # Resolve temperature from param → env → default
+    if temperature is None:
+        temperature = float(os.getenv("LLM_TEMPERATURE", "0"))
+
     if os.getenv("GEMINI_API_KEY"):
         try:
             from langchain_google_genai import ChatGoogleGenerativeAI
         except ImportError as exc:
             raise RuntimeError("Install: pip install langchain-google-genai") from exc
+        resolved_model = model or os.getenv("GEMINI_MODEL") or os.getenv("LLM_MODEL", "gemini-2.5-flash")
         return ChatGoogleGenerativeAI(
-            model=model or os.getenv("LLM_MODEL", "gemini-2.5-flash"),
+            model=resolved_model,
             google_api_key=os.getenv("GEMINI_API_KEY"),
             temperature=temperature,
         )
