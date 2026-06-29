@@ -1,0 +1,118 @@
+{
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "score_pct": 100.0,
+  "results": [
+    {
+      "id": "gq_d10_01",
+      "question": "Theo chính sách hoàn tiền hiện hành, khách hàng có tối đa bao nhiêu ngày làm việc để gửi yêu cầu hoàn tiền sau khi đơn được xác nhận?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'Theo chính sách hoàn tiền hiện hành, khách hàng có tối đa bao nhiêu ngày làm việc để gửi yêu cầu hoàn tiền sau khi đơn được xác nhận?', here is the result: Success: Retrieved document policy_refund_v4. Content: Chính sách hoàn tiền (policy_refund_v4): Khách hàng có tối đa 7 ngày làm việc sau khi đơn hàng được xác nhận để gửi yêu cầu hoàn tiền. Các sản phẩm bị loại khỏi điều kiện hoàn tiền bao gồm hàng kỹ thuật số, license key, và subscription. Sau khi được duyệt, Finance Team sẽ xử lý yêu cầu hoàn tiền trong vòng 3-5 ngày làm việc.",
+      "doc_retrieved": "",
+      "expected_doc": "policy_refund_v4",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_02",
+      "question": "Đâu là loại sản phẩm bị loại khỏi điều kiện hoàn tiền?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'Đâu là loại sản phẩm bị loại khỏi điều kiện hoàn tiền?', here is the result: Success: Retrieved document policy_refund_v4. Content: Chính sách hoàn tiền (policy_refund_v4): Khách hàng có tối đa 7 ngày làm việc sau khi đơn hàng được xác nhận để gửi yêu cầu hoàn tiền. Các sản phẩm bị loại khỏi điều kiện hoàn tiền bao gồm hàng kỹ thuật số, license key, và subscription. Sau khi được duyệt, Finance Team sẽ xử lý yêu cầu hoàn tiền trong vòng 3-5 ngày làm việc.",
+      "doc_retrieved": "",
+      "expected_doc": "policy_refund_v4",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_03",
+      "question": "Finance Team xử lý yêu cầu hoàn tiền trong bao lâu?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'Finance Team xử lý yêu cầu hoàn tiền trong bao lâu?', here is the result: Success: Retrieved document policy_refund_v4. Content: Chính sách hoàn tiền (policy_refund_v4): Khách hàng có tối đa 7 ngày làm việc sau khi đơn hàng được xác nhận để gửi yêu cầu hoàn tiền. Các sản phẩm bị loại khỏi điều kiện hoàn tiền bao gồm hàng kỹ thuật số, license key, và subscription. Sau khi được duyệt, Finance Team sẽ xử lý yêu cầu hoàn tiền trong vòng 3-5 ngày làm việc.",
+      "doc_retrieved": "",
+      "expected_doc": "policy_refund_v4",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_04",
+      "question": "SLA phản hồi ban đầu cho ticket P1 là bao lâu?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'SLA phản hồi ban đầu cho ticket P1 là bao lâu?', here is the result: Success: Retrieved document sla_p1_2026. Content: SLA Hỗ trợ P1 2026 (sla_p1_2026): SLA phản hồi ban đầu cho ticket P1 là 15 phút (hoặc 15p). SLA resolution (giải quyết) cho ticket P1 là 4 giờ. Nếu không có phản hồi với ticket P1 sau 10 phút, hệ thống sẽ tự động escalate (auto escalate).",
+      "doc_retrieved": "",
+      "expected_doc": "sla_p1_2026",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_05",
+      "question": "SLA resolution cho ticket P1 là bao nhiêu giờ?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'SLA resolution cho ticket P1 là bao nhiêu giờ?', here is the result: Success: Retrieved document sla_p1_2026. Content: SLA Hỗ trợ P1 2026 (sla_p1_2026): SLA phản hồi ban đầu cho ticket P1 là 15 phút (hoặc 15p). SLA resolution (giải quyết) cho ticket P1 là 4 giờ. Nếu không có phản hồi với ticket P1 sau 10 phút, hệ thống sẽ tự động escalate (auto escalate).",
+      "doc_retrieved": "",
+      "expected_doc": "sla_p1_2026",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_06",
+      "question": "Nếu không có phản hồi với ticket P1 sau bao lâu thì hệ thống auto escalate?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'Nếu không có phản hồi với ticket P1 sau bao lâu thì hệ thống auto escalate?', here is the result: Success: Retrieved document sla_p1_2026. Content: SLA Hỗ trợ P1 2026 (sla_p1_2026): SLA phản hồi ban đầu cho ticket P1 là 15 phút (hoặc 15p). SLA resolution (giải quyết) cho ticket P1 là 4 giờ. Nếu không có phản hồi với ticket P1 sau 10 phút, hệ thống sẽ tự động escalate (auto escalate).",
+      "doc_retrieved": "",
+      "expected_doc": "sla_p1_2026",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_07",
+      "question": "Tài khoản bị khóa sau bao nhiêu lần đăng nhập sai liên tiếp?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'Tài khoản bị khóa sau bao nhiêu lần đăng nhập sai liên tiếp?', here is the result: Success: Retrieved document it_helpdesk_faq. Content: IT Helpdesk FAQ (it_helpdesk_faq): Tài khoản sẽ bị khóa sau 5 lần đăng nhập sai liên tiếp. Hệ thống VPN cho phép kết nối tối đa 2 thiết bị cùng lúc.",
+      "doc_retrieved": "",
+      "expected_doc": "it_helpdesk_faq",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_08",
+      "question": "VPN cho phép kết nối tối đa bao nhiêu thiết bị cùng lúc?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'VPN cho phép kết nối tối đa bao nhiêu thiết bị cùng lúc?', here is the result: Success: Retrieved document it_helpdesk_faq. Content: IT Helpdesk FAQ (it_helpdesk_faq): Tài khoản sẽ bị khóa sau 5 lần đăng nhập sai liên tiếp. Hệ thống VPN cho phép kết nối tối đa 2 thiết bị cùng lúc.",
+      "doc_retrieved": "",
+      "expected_doc": "it_helpdesk_faq",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_09",
+      "question": "Nhân viên dưới 3 năm kinh nghiệm được bao nhiêu ngày phép năm theo chính sách HR 2026?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'Nhân viên dưới 3 năm kinh nghiệm được bao nhiêu ngày phép năm theo chính sách HR 2026?', here is the result: Success: Retrieved document hr_leave_policy. Content: Chính sách nghỉ phép HR 2026 (hr_leave_policy): Nhân viên có dưới 3 năm kinh nghiệm được hưởng 12 ngày phép năm. Đây là quy định hiện hành theo chính sách HR 2026.",
+      "doc_retrieved": "",
+      "expected_doc": "hr_leave_policy",
+      "doc_match": null,
+      "failures": []
+    },
+    {
+      "id": "gq_d10_10",
+      "question": "Level 4 Admin Access yêu cầu phê duyệt bởi ai?",
+      "status": "PASS",
+      "route": "tool",
+      "answer": "Based on your request regarding 'Level 4 Admin Access yêu cầu phê duyệt bởi ai?', here is the result: Success: Retrieved document access_control_sop. Content: SOP Kiểm soát truy cập (access_control_sop): Việc cấp quyền Level 4 Admin Access yêu cầu sự phê duyệt trực tiếp bởi IT Manager hoặc CISO.",
+      "doc_retrieved": "",
+      "expected_doc": "access_control_sop",
+      "doc_match": null,
+      "failures": []
+    }
+  ]
+}

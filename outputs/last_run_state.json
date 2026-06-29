@@ -1,0 +1,192 @@
+{
+  "state": {
+    "thread_id": "thread-html-ui-run",
+    "scenario_id": "html-ui-run",
+    "query": "How do I reset my password?",
+    "route": "simple",
+    "risk_level": "low",
+    "attempt": 0,
+    "max_attempts": 3,
+    "final_answer": "Your request 'How do I reset my password?' has been approved by the review team.",
+    "approval": {
+      "approved": true,
+      "reviewer": "HTML-Dashboard-User",
+      "comment": "Approved via Web HTML Dashboard UI"
+    },
+    "messages": [
+      "intake:How do I reset my password?",
+      "classify:simple",
+      "answer:Your request 'How do I reset my password",
+      "intake:How do I reset my password?",
+      "classify:simple",
+      "answer:Your request 'How do I reset my password",
+      "intake:How do I reset my password?",
+      "classify:simple",
+      "answer:Your request 'How do I reset my password",
+      "intake:How do I reset my password?",
+      "classify:simple",
+      "answer:Your request 'How do I reset my password",
+      "intake:How do I reset my password?",
+      "classify:simple",
+      "answer:Your request 'How do I reset my password"
+    ],
+    "tool_results": [],
+    "errors": [],
+    "events": [
+      {
+        "node": "intake",
+        "event_type": "completed",
+        "message": "query normalized",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "classify",
+        "event_type": "completed",
+        "message": "classified as simple",
+        "latency_ms": 0,
+        "metadata": {
+          "route": "simple"
+        }
+      },
+      {
+        "node": "answer",
+        "event_type": "completed",
+        "message": "answer generated",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "finalize",
+        "event_type": "completed",
+        "message": "workflow finished",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "intake",
+        "event_type": "completed",
+        "message": "query normalized",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "classify",
+        "event_type": "completed",
+        "message": "classified as simple",
+        "latency_ms": 0,
+        "metadata": {
+          "route": "simple"
+        }
+      },
+      {
+        "node": "answer",
+        "event_type": "completed",
+        "message": "answer generated",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "finalize",
+        "event_type": "completed",
+        "message": "workflow finished",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "intake",
+        "event_type": "completed",
+        "message": "query normalized",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "classify",
+        "event_type": "completed",
+        "message": "classified as simple",
+        "latency_ms": 0,
+        "metadata": {
+          "route": "simple"
+        }
+      },
+      {
+        "node": "answer",
+        "event_type": "completed",
+        "message": "answer generated",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "finalize",
+        "event_type": "completed",
+        "message": "workflow finished",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "intake",
+        "event_type": "completed",
+        "message": "query normalized",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "classify",
+        "event_type": "completed",
+        "message": "classified as simple",
+        "latency_ms": 0,
+        "metadata": {
+          "route": "simple"
+        }
+      },
+      {
+        "node": "answer",
+        "event_type": "completed",
+        "message": "answer generated",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "finalize",
+        "event_type": "completed",
+        "message": "workflow finished",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "intake",
+        "event_type": "completed",
+        "message": "query normalized",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "classify",
+        "event_type": "completed",
+        "message": "classified as simple",
+        "latency_ms": 0,
+        "metadata": {
+          "route": "simple"
+        }
+      },
+      {
+        "node": "answer",
+        "event_type": "completed",
+        "message": "answer generated",
+        "latency_ms": 0,
+        "metadata": {}
+      },
+      {
+        "node": "finalize",
+        "event_type": "completed",
+        "message": "workflow finished",
+        "latency_ms": 0,
+        "metadata": {}
+      }
+    ]
+  },
+  "success": true,
+  "retry_count": 0,
+  "interrupt_count": 0,
+  "latency_ms": 75329
+}

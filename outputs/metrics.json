@@ -1,0 +1,109 @@
+{
+  "total_scenarios": 7,
+  "success_rate": 1.0,
+  "avg_nodes_visited": 12.857142857142858,
+  "total_retries": 6,
+  "total_interrupts": 4,
+  "resume_success": false,
+  "scenario_metrics": [
+    {
+      "scenario_id": "S01_simple",
+      "success": true,
+      "expected_route": "simple",
+      "actual_route": "simple",
+      "nodes_visited": 8,
+      "retry_count": 0,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "S02_tool",
+      "success": true,
+      "expected_route": "tool",
+      "actual_route": "tool",
+      "nodes_visited": 12,
+      "retry_count": 0,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "S03_missing",
+      "success": true,
+      "expected_route": "missing_info",
+      "actual_route": "missing_info",
+      "nodes_visited": 8,
+      "retry_count": 0,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "S04_risky",
+      "success": true,
+      "expected_route": "risky",
+      "actual_route": "risky",
+      "nodes_visited": 16,
+      "retry_count": 0,
+      "interrupt_count": 2,
+      "approval_required": true,
+      "approval_observed": true,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "S05_error",
+      "success": true,
+      "expected_route": "error",
+      "actual_route": "error",
+      "nodes_visited": 20,
+      "retry_count": 4,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": [
+        "Retry attempt 1: transient failure encountered",
+        "Retry attempt 2: transient failure encountered",
+        "Retry attempt 1: transient failure encountered",
+        "Retry attempt 2: transient failure encountered"
+      ]
+    },
+    {
+      "scenario_id": "S06_delete",
+      "success": true,
+      "expected_route": "risky",
+      "actual_route": "risky",
+      "nodes_visited": 16,
+      "retry_count": 0,
+      "interrupt_count": 2,
+      "approval_required": true,
+      "approval_observed": true,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "S07_dead_letter",
+      "success": true,
+      "expected_route": "error",
+      "actual_route": "error",
+      "nodes_visited": 10,
+      "retry_count": 2,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": [
+        "Retry attempt 1: transient failure encountered",
+        "Retry attempt 1: transient failure encountered"
+      ]
+    }
+  ]
+}
