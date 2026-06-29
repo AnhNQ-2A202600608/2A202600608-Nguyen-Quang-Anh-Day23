@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from typing import Annotated
 
@@ -27,19 +28,30 @@ def run_scenarios(
     """Run all grading scenarios and write metrics JSON."""
     cfg = yaml.safe_load(config.read_text(encoding="utf-8"))
     scenarios = load_scenarios(cfg["scenarios_path"])
-    checkpointer = build_checkpointer(cfg.get("checkpointer", "memory"), cfg.get("database_url"))
+    db_path = cfg.get("database_url", "outputs/checkpoints.db")
+    checkpointer = build_checkpointer(cfg.get("checkpointer", "memory"), db_path)
     graph = build_graph(checkpointer=checkpointer)
     metrics = []
     for scenario in scenarios:
         state = initial_state(scenario)
         run_config = {"configurable": {"thread_id": state["thread_id"]}}
+        t_start = time.perf_counter()
         final_state = graph.invoke(state, config=run_config)
-        metrics.append(metric_from_state(final_state, scenario.expected_route.value, scenario.requires_approval))
-    report = summarize_metrics(metrics)
+        latency_ms = int((time.perf_counter() - t_start) * 1000)
+        metrics.append(
+            metric_from_state(
+                final_state,
+                scenario.expected_route.value,
+                scenario.requires_approval,
+                latency_ms=latency_ms,
+            )
+        )
+    report = summarize_metrics(metrics, db_path=db_path)
     write_metrics(report, output)
     if cfg.get("report_path"):
         write_report(report, cfg["report_path"])
     typer.echo(f"Wrote metrics to {output}")
+
 
 
 @app.command("validate-metrics")
