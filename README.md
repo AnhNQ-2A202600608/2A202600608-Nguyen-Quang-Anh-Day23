@@ -244,3 +244,67 @@ Pick one or more:
 5. **SqliteSaver API**: In `langgraph-checkpoint-sqlite` 3.x, use `SqliteSaver(conn=sqlite3.connect(...))` not `SqliteSaver.from_conn_string()`.
 
 6. **API key not set**: If you get "No LLM API key found", check your `.env` file and make sure it's loaded (use `python-dotenv` or export manually).
+
+---
+
+## Student Completion — Nguyễn Quang Anh (2A202600608)
+
+### ✅ Submission Checklist (Verified)
+
+- [x] All `TODO(student)` sections implemented (10 nodes, 4 routing functions, graph wiring)
+- [x] `.env` configured with `GEMINI_API_KEY` (Gemini 2.0 Flash)
+- [x] `classify_node` uses real LLM call with `.with_structured_output(ClassificationResult)` — NOT keyword-only
+- [x] `answer_node` uses real LLM call grounded in tool_results context — NOT hardcoded
+- [x] `make test` passes — **24/24 tests passed** (19 unit + 5 LLM smoke tests)
+- [x] `make run-scenarios` generates valid `outputs/metrics.json`
+- [x] `make grade-local` passes — `Metrics valid. success_rate=100.00%`
+- [x] `reports/lab_report_template.md` → completed as `reports/REPORT.md` (10 sections)
+- [x] Can explain routes and failure modes (see `reports/REPORT.md` Part 6)
+
+### ✅ Extension Tracks Completed (90+ points)
+
+- [x] **Real HITL** — `approval_node` uses `langgraph.types.interrupt()` when `LANGGRAPH_INTERRUPT=true`
+- [x] **SQLite Checkpoint** — WAL mode, thread_id per run, `outputs/checkpoints.db`
+- [x] **Standalone HTML Dashboard** — `python web_server.py` → `http://127.0.0.1:8080/`
+  - Overview tab with Mermaid architecture diagram
+  - Single Run Analyst with real-time agent trace
+  - Scenario Batch Runs with metrics table
+  - State & Trace viewer per thread_id
+- [x] **Graph Diagram** — Mermaid flowchart rendered in dashboard Overview tab
+- [x] **Extended Scenarios** — 17 scenarios including edge cases (H01–H10)
+- [x] **Golden Test Set** — 10/10 PASS (100% score) — see `outputs/golden_grading_results.json`
+- [x] **LLM-as-Judge** — `evaluate_node` supports `USE_LLM_JUDGE=true`
+
+### Test Results Summary
+
+| Test Suite | Tests | Result |
+|------------|------:|--------|
+| `test_state.py` — State schema validation | 3 | ✅ PASS |
+| `test_routing.py` — Conditional edge functions | 13 | ✅ PASS |
+| `test_metrics.py` — Metrics schema validation | 3 | ✅ PASS |
+| `test_graph_smoke.py` — End-to-end LLM routing | 5 | ✅ PASS |
+| **Golden test grader** — Policy Q&A accuracy | 10 | ✅ 10/10 (100%) |
+
+### Quick Start (Student Setup)
+
+```bash
+# Install
+pip install -e ".[dev]"
+pip install langchain-google-genai langgraph-checkpoint-sqlite
+
+# Configure
+cp .env.example .env
+# Add: GEMINI_API_KEY=your_key
+
+# Run all scenarios
+python -m langgraph_agent_lab.cli run-scenarios --config configs/lab.yaml --output outputs/metrics.json
+
+# Validate
+python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics.json
+
+# Run golden grader
+python grade_golden.py
+
+# Launch dashboard
+python web_server.py  # → http://127.0.0.1:8080/
+```
