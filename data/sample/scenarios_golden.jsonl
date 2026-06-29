@@ -1,0 +1,10 @@
+{"id":"gq_d10_01","query":"Theo chính sách hoàn tiền hiện hành, khách hàng có tối đa bao nhiêu ngày làm việc để gửi yêu cầu hoàn tiền sau khi đơn được xác nhận?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_02","query":"Đâu là loại sản phẩm bị loại khỏi điều kiện hoàn tiền?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_03","query":"Finance Team xử lý yêu cầu hoàn tiền trong bao lâu?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_04","query":"SLA phản hồi ban đầu cho ticket P1 là bao lâu?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_05","query":"SLA resolution cho ticket P1 là bao nhiêu giờ?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_06","query":"Nếu không có phản hồi với ticket P1 sau bao lâu thì hệ thống auto escalate?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_07","query":"Tài khoản bị khóa sau bao nhiêu lần đăng nhập sai liên tiếp?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_08","query":"VPN cho phép kết nối tối đa bao nhiêu thiết bị cùng lúc?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_09","query":"Nhân viên dưới 3 năm kinh nghiệm được bao nhiêu ngày phép năm theo chính sách HR 2026?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}
+{"id":"gq_d10_10","query":"Level 4 Admin Access yêu cầu phê duyệt bởi ai?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["golden"]}

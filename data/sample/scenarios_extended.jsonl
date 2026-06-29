@@ -1,0 +1,17 @@
+{"id":"S01_simple","query":"How do I reset my password?","expected_route":"simple","requires_approval":false,"should_retry":false,"tags":["simple"]}
+{"id":"S02_tool","query":"Please lookup order status for order 12345","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["tool"]}
+{"id":"S03_missing","query":"Can you fix it?","expected_route":"missing_info","requires_approval":false,"should_retry":false,"tags":["clarification"]}
+{"id":"S04_risky","query":"Refund this customer and send confirmation email","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","risky"]}
+{"id":"S05_error","query":"Timeout failure while processing request","expected_route":"error","requires_approval":false,"should_retry":true,"tags":["retry"]}
+{"id":"S06_delete","query":"Delete customer account after support verification","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","destructive"]}
+{"id":"S07_dead_letter","query":"System failure cannot recover after multiple attempts","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":1,"tags":["dead_letter","retry"]}
+{"id":"H01_complex_refund","query":"My order 98765 is broken and I demand a full payment reversal to my bank card immediately! Please send a confirmation once done.","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hard","risky","refund"]}
+{"id":"H02_ambiguous_error","query":"System timed out while I was trying to check order status for my tracking number 456-XYZ. Did it fail?","expected_route":"error","requires_approval":false,"should_retry":true,"tags":["hard","error","ambiguous"]}
+{"id":"H03_vague_help","query":"Please fix my issue quickly. It doesn't work at all and I am losing money!","expected_route":"missing_info","requires_approval":false,"should_retry":false,"tags":["hard","clarification"]}
+{"id":"H04_multi_intent","query":"I want to cancel my annual subscription renewal. Also, let me know if there was a billing failure on my last payment.","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hard","risky","subscription"]}
+{"id":"H05_db_crash","query":"Fatal database connection error occurred while retrieving order records. System cannot connect to the server.","expected_route":"error","requires_approval":false,"should_retry":true,"tags":["hard","error"]}
+{"id":"H06_info_lookup","query":"I would like to verify if order number 77889 has been shipped yet and check its delivery address.","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["hard","tool"]}
+{"id":"H07_short_vague","query":"Not working.","expected_route":"missing_info","requires_approval":false,"should_retry":false,"tags":["hard","clarification"]}
+{"id":"H08_payment_reversal","query":"Revert the credit card charge of $150.00 for user account ACC-554 and log a ticket.","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hard","risky"]}
+{"id":"H09_transient_db","query":"Database socket timeout transient failure during inventory query check.","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":2,"tags":["hard","error"]}
+{"id":"H10_general_faq","query":"What is your standard return and exchange policy for items purchased during the holiday season?","expected_route":"simple","requires_approval":false,"should_retry":false,"tags":["hard","simple"]}
