@@ -6,7 +6,10 @@ that check schema/metrics can run even if students are still debugging graph wir
 
 from __future__ import annotations
 
-from langgraph.graph import CompiledStateGraph
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from langgraph.graph import CompiledStateGraph
 
 from .state import AgentState
 

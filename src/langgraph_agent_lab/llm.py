@@ -12,8 +12,10 @@ Usage in nodes:
 from __future__ import annotations
 
 import os
+from typing import TYPE_CHECKING
 
-from langchain_core.language_models import BaseChatModel
+if TYPE_CHECKING:
+    from langchain_core.language_models import BaseChatModel
 
 # Load .env file if python-dotenv is available
 try:
