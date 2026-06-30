@@ -4,8 +4,6 @@ These tests verify correct routing logic. They will fail with NotImplementedErro
 until you implement the routing functions in routing.py.
 """
 
-import pytest
-
 from langgraph_agent_lab.routing import (
     route_after_approval,
     route_after_classify,
@@ -15,55 +13,55 @@ from langgraph_agent_lab.routing import (
 from langgraph_agent_lab.state import Route
 
 
-def test_route_after_classify_simple():
+def test_route_after_classify_simple() -> None:
     assert route_after_classify({"route": Route.SIMPLE.value}) == "answer"
 
 
-def test_route_after_classify_tool():
+def test_route_after_classify_tool() -> None:
     assert route_after_classify({"route": Route.TOOL.value}) == "tool"
 
 
-def test_route_after_classify_risky():
+def test_route_after_classify_risky() -> None:
     assert route_after_classify({"route": Route.RISKY.value}) == "risky_action"
 
 
-def test_route_after_classify_missing():
+def test_route_after_classify_missing() -> None:
     assert route_after_classify({"route": Route.MISSING_INFO.value}) == "clarify"
 
 
-def test_route_after_classify_error():
+def test_route_after_classify_error() -> None:
     assert route_after_classify({"route": Route.ERROR.value}) == "retry"
 
 
-def test_route_after_classify_unknown_defaults():
+def test_route_after_classify_unknown_defaults() -> None:
     assert route_after_classify({"route": "unknown_route"}) == "answer"
 
 
-def test_route_after_approval_approved():
+def test_route_after_approval_approved() -> None:
     assert route_after_approval({"approval": {"approved": True}}) == "tool"
 
 
-def test_route_after_approval_rejected():
+def test_route_after_approval_rejected() -> None:
     assert route_after_approval({"approval": {"approved": False}}) == "clarify"
 
 
-def test_route_after_retry_within_limit():
+def test_route_after_retry_within_limit() -> None:
     assert route_after_retry({"attempt": 0, "max_attempts": 3}) == "tool"
     assert route_after_retry({"attempt": 1, "max_attempts": 3}) == "tool"
     assert route_after_retry({"attempt": 2, "max_attempts": 3}) == "tool"
 
 
-def test_route_after_retry_at_limit():
+def test_route_after_retry_at_limit() -> None:
     assert route_after_retry({"attempt": 3, "max_attempts": 3}) == "dead_letter"
 
 
-def test_route_after_retry_over_limit():
+def test_route_after_retry_over_limit() -> None:
     assert route_after_retry({"attempt": 5, "max_attempts": 3}) == "dead_letter"
 
 
-def test_route_after_evaluate_success():
+def test_route_after_evaluate_success() -> None:
     assert route_after_evaluate({"evaluation_result": "success"}) == "answer"
 
 
-def test_route_after_evaluate_retry():
+def test_route_after_evaluate_retry() -> None:
     assert route_after_evaluate({"evaluation_result": "needs_retry"}) == "retry"

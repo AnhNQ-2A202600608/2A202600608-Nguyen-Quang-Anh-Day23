@@ -6,12 +6,12 @@ that check schema/metrics can run even if students are still debugging graph wir
 
 from __future__ import annotations
 
-from typing import Any
+from langgraph.graph import CompiledStateGraph
 
 from .state import AgentState
 
 
-def build_graph(checkpointer: Any | None = None):
+def build_graph(checkpointer: object | None = None) -> CompiledStateGraph:
     """Build and compile the LangGraph workflow.
 
     Architecture:
@@ -36,12 +36,12 @@ def build_graph(checkpointer: Any | None = None):
         ask_clarification_node,
         classify_node,
         dead_letter_node,
+        evaluate_node,
         finalize_node,
         intake_node,
         retry_or_fallback_node,
         risky_action_node,
         tool_node,
-        evaluate_node,
     )
     from .routing import (
         route_after_approval,

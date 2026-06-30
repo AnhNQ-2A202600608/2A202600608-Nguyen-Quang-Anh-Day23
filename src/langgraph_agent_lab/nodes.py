@@ -112,18 +112,41 @@ def classify_node(state: AgentState) -> dict:
         from .llm import get_llm
         llm = get_llm()
         structured_llm = llm.with_structured_output(ClassificationResult)
-        result = structured_llm.invoke(
-            f"""You are a support ticket classifier. Classify the following customer query into exactly one route.
-
-Classification rules (check in this priority order):
-1. "risky" — Actions with real-world side effects: refunds, deletions, cancellations, sending emails, account removal, payment changes, data destruction
-2. "error" — System/technical failures: timeouts, crashes, service unavailable, connection errors, processing failures, cannot recover
-3. "missing_info" — Vague or incomplete queries that lack specific details needed to take action (no order ID, no account info, unclear what they want)
-4. "tool" — ANY query asking about specific policy details, SLA numbers, time limits, conditions, procedures, HR rules, IT rules, access control rules. This includes questions in Vietnamese about: hoàn tiền, chính sách, ngày làm việc, SLA, tài khoản, VPN, ngày phép, admin access, finance team, phê duyệt, điều kiện, loại sản phẩm bị loại, etc. When in doubt between tool and simple, choose TOOL.
-5. "simple" — Only truly general conversational questions with no specific data lookup needed (e.g., "What is your name?", "How do I reset my password?")
-
-Query: {query}"""
+        prompt = (
+            "You are a support ticket classifier. "
+            "Classify the following customer query into "
+            "exactly one route.\n\n"
+            "Classification rules "
+            "(check in this priority order):\n"
+            '1. "risky" — Actions with real-world side '
+            "effects: refunds, deletions, cancellations, "
+            "sending emails, account removal, payment "
+            "changes, data destruction\n"
+            '2. "error" — System/technical failures: '
+            "timeouts, crashes, service unavailable, "
+            "connection errors, processing failures, "
+            "cannot recover\n"
+            '3. "missing_info" — Vague or incomplete '
+            "queries that lack specific details needed "
+            "to take action (no order ID, no account "
+            "info, unclear what they want)\n"
+            '4. "tool" — ANY query asking about specific '
+            "policy details, SLA numbers, time limits, "
+            "conditions, procedures, HR rules, IT rules, "
+            "access control rules. This includes questions "
+            "in Vietnamese about: hoàn tiền, chính sách, "
+            "ngày làm việc, SLA, tài khoản, VPN, ngày phép, "
+            "admin access, finance team, phê duyệt, "
+            "điều kiện, loại sản phẩm bị loại, etc. "
+            "When in doubt between tool and simple, "
+            "choose TOOL.\n"
+            '5. "simple" — Only truly general conversational '
+            "questions with no specific data lookup needed "
+            '(e.g., "What is your name?", '
+            '"How do I reset my password?")\n\n'
+            f"Query: {query}"
         )
+        result = structured_llm.invoke(prompt)
         route = result.route
         # Validate route
         if route not in ("simple", "tool", "missing_info", "risky", "error"):
@@ -158,48 +181,88 @@ def tool_node(state: AgentState) -> dict:
     if any(k in query_lower for k in ["hoàn tiền", "refund", "sản phẩm bị loại", "finance"]):
         doc_id = "policy_refund_v4"
         doc_content = (
-            "Chính sách hoàn tiền (policy_refund_v4): Khách hàng có tối đa 7 ngày làm việc sau khi đơn hàng được xác nhận "
-            "để gửi yêu cầu hoàn tiền. Các sản phẩm bị loại khỏi điều kiện hoàn tiền bao gồm hàng kỹ thuật số, license key, "
-            "và subscription. Sau khi được duyệt, Finance Team sẽ xử lý yêu cầu hoàn tiền trong vòng 3-5 ngày làm việc."
+            "Chính sách hoàn tiền (policy_refund_v4): "
+            "Khách hàng có tối đa 7 ngày làm việc "
+            "sau khi đơn hàng được xác nhận "
+            "để gửi yêu cầu hoàn tiền. "
+            "Các sản phẩm bị loại khỏi điều kiện "
+            "hoàn tiền bao gồm hàng kỹ thuật số, "
+            "license key, và subscription. "
+            "Sau khi được duyệt, Finance Team sẽ "
+            "xử lý yêu cầu hoàn tiền trong vòng "
+            "3-5 ngày làm việc."
         )
     elif any(k in query_lower for k in ["sla", "p1", "escalate", "resolution", "phản hồi"]):
         doc_id = "sla_p1_2026"
         doc_content = (
-            "SLA Hỗ trợ P1 2026 (sla_p1_2026): SLA phản hồi ban đầu cho ticket P1 là 15 phút (hoặc 15p). "
-            "SLA resolution (giải quyết) cho ticket P1 là 4 giờ. Nếu không có phản hồi với ticket P1 sau 10 phút, "
-            "hệ thống sẽ tự động escalate (auto escalate)."
+            "SLA Hỗ trợ P1 2026 (sla_p1_2026): "
+            "SLA phản hồi ban đầu cho ticket P1 là "
+            "15 phút (hoặc 15p). "
+            "SLA resolution (giải quyết) cho ticket "
+            "P1 là 4 giờ. Nếu không có phản hồi "
+            "với ticket P1 sau 10 phút, "
+            "hệ thống sẽ tự động escalate "
+            "(auto escalate)."
         )
     elif any(k in query_lower for k in ["khóa", "đăng nhập", "vpn", "thiết bị", "login", "device"]):
         doc_id = "it_helpdesk_faq"
         doc_content = (
-            "IT Helpdesk FAQ (it_helpdesk_faq): Tài khoản sẽ bị khóa sau 5 lần đăng nhập sai liên tiếp. "
-            "Hệ thống VPN cho phép kết nối tối đa 2 thiết bị cùng lúc."
+            "IT Helpdesk FAQ (it_helpdesk_faq): "
+            "Tài khoản sẽ bị khóa sau 5 lần "
+            "đăng nhập sai liên tiếp. "
+            "Hệ thống VPN cho phép kết nối "
+            "tối đa 2 thiết bị cùng lúc."
         )
-    elif any(k in query_lower for k in ["phép", "nghỉ phép", "leave", "kinh nghiệm", "năm kinh nghiệm"]):
+    elif any(
+        k in query_lower
+        for k in [
+            "phép", "nghỉ phép", "leave",
+            "kinh nghiệm", "năm kinh nghiệm",
+        ]
+    ):
         doc_id = "hr_leave_policy"
         doc_content = (
-            "Chính sách nghỉ phép HR 2026 (hr_leave_policy): Nhân viên có dưới 3 năm kinh nghiệm được hưởng 12 ngày phép năm. "
-            "Đây là quy định hiện hành theo chính sách HR 2026."
+            "Chính sách nghỉ phép HR 2026 "
+            "(hr_leave_policy): Nhân viên có dưới "
+            "3 năm kinh nghiệm được hưởng "
+            "12 ngày phép năm. "
+            "Đây là quy định hiện hành theo "
+            "chính sách HR 2026."
         )
     elif any(k in query_lower for k in ["level 4", "admin access", "sop", "cấp quyền"]):
         doc_id = "access_control_sop"
         doc_content = (
-            "SOP Kiểm soát truy cập (access_control_sop): Việc cấp quyền Level 4 Admin Access yêu cầu "
-            "sự phê duyệt trực tiếp bởi IT Manager hoặc CISO."
+            "SOP Kiểm soát truy cập "
+            "(access_control_sop): Việc cấp quyền "
+            "Level 4 Admin Access yêu cầu "
+            "sự phê duyệt trực tiếp bởi "
+            "IT Manager hoặc CISO."
         )
 
     if doc_id:
         result = f"Success: Retrieved document {doc_id}. Content: {doc_content}"
     else:
         if route == "error" and attempt < 2:
-            result = f"ERROR: Transient tool failure on attempt {attempt} for query: {query[:50]}"
+            result = (
+                "ERROR: Transient tool failure on "
+                f"attempt {attempt} for query: "
+                f"{query[:50]}"
+            )
         else:
-            result = f"Success: Tool executed successfully for query: {query[:50]}. Result: operation completed."
+            result = (
+                "Success: Tool executed successfully "
+                f"for query: {query[:50]}. "
+                "Result: operation completed."
+            )
 
+    status = "error" if "ERROR" in result else "success"
+    detail = f"tool result: {status}"
+    if doc_id:
+        detail += f" | doc: {doc_id}"
     return {
         "tool_results": [result],
         "messages": [f"tool:{result[:40]}"],
-        "events": [make_event("tool", "completed", f"tool result: {'error' if 'ERROR' in result else 'success'}" + (f" | doc: {doc_id}" if doc_id else ""))],
+        "events": [make_event("tool", "completed", detail)],
     }
 
 
@@ -219,8 +282,12 @@ def evaluate_node(state: AgentState) -> dict:
             from .llm import get_llm
             llm = get_llm()
             response = llm.invoke(
-                f"Evaluate this tool result. Reply with exactly 'success' if the result is satisfactory, "
-                f"or 'needs_retry' if it indicates an error or failure.\n\nTool result: {latest_result}"
+                "Evaluate this tool result. Reply "
+                "with exactly 'success' if the "
+                "result is satisfactory, or "
+                "'needs_retry' if it indicates an "
+                "error or failure.\n\n"
+                f"Tool result: {latest_result}"
             )
             evaluation = response.content.strip().lower()
             if "needs_retry" in evaluation or "error" in evaluation or "fail" in evaluation:
@@ -250,38 +317,65 @@ def answer_node(state: AgentState) -> dict:
     query = state.get("query", "")
     tool_results = state.get("tool_results", [])
     approval = state.get("approval")
-    route = state.get("route", "")
 
     # Build context
     context_parts = [f"Original query: {query}"]
     if tool_results:
-        context_parts.append(f"Tool results: {'; '.join(tool_results[-3:])}")
+        joined = "; ".join(tool_results[-3:])
+        context_parts.append(f"Tool results: {joined}")
     if approval:
-        context_parts.append(f"Approval: {'approved' if approval.get('approved') else 'rejected'} by {approval.get('reviewer', 'unknown')}")
+        approved = (
+            "approved"
+            if approval.get("approved")
+            else "rejected"
+        )
+        reviewer = approval.get("reviewer", "unknown")
+        context_parts.append(
+            f"Approval: {approved} by {reviewer}"
+        )
     context = "\n".join(context_parts)
 
     try:
         from .llm import get_llm
         llm = get_llm()
         response = llm.invoke(
-            f"""You are a helpful support agent. Generate a concise, professional response to the customer.
-Use the available context to ground your response. Be specific and actionable.
-
-{context}
-
-Respond directly to the customer:"""
+            "You are a helpful support agent. "
+            "Generate a concise, professional "
+            "response to the customer.\n"
+            "Use the available context to ground "
+            "your response. Be specific and "
+            "actionable.\n\n"
+            f"{context}\n\n"
+            "Respond directly to the customer:"
         )
         final_answer = response.content.strip()
     except Exception:
         # Template fallback
         if tool_results:
-            latest_result = tool_results[-1] if tool_results else ""
-            final_answer = f"Based on your request regarding '{query}', here is the result: {latest_result}"
+            latest_result = (
+                tool_results[-1] if tool_results else ""
+            )
+            final_answer = (
+                "Based on your request regarding "
+                f"'{query}', here is the result: "
+                f"{latest_result}"
+            )
         elif approval:
-            status = "approved" if approval.get("approved") else "rejected"
-            final_answer = f"Your request '{query}' has been {status} by the review team."
+            status = (
+                "approved"
+                if approval.get("approved")
+                else "rejected"
+            )
+            final_answer = (
+                f"Your request '{query}' has been "
+                f"{status} by the review team."
+            )
         else:
-            final_answer = f"Thank you for your query: '{query}'. Our team has reviewed your request and is ready to assist."
+            final_answer = (
+                "Thank you for your query: "
+                f"'{query}'. Our team has reviewed "
+                "your request and is ready to assist."
+            )
 
     return {
         "final_answer": final_answer,
@@ -344,22 +438,50 @@ def approval_node(state: AgentState) -> dict:
                     "proposed_action": state.get("proposed_action", ""),
                 }
             )
+            is_dict = isinstance(decision, dict)
             approval = {
-                "approved": decision.get("approved", False) if isinstance(decision, dict) else bool(decision),
-                "reviewer": decision.get("reviewer", "human") if isinstance(decision, dict) else "human",
-                "comment": decision.get("comment", "") if isinstance(decision, dict) else str(decision),
+                "approved": (
+                    decision.get("approved", False)
+                    if is_dict
+                    else bool(decision)
+                ),
+                "reviewer": (
+                    decision.get("reviewer", "human")
+                    if is_dict
+                    else "human"
+                ),
+                "comment": (
+                    decision.get("comment", "")
+                    if is_dict
+                    else str(decision)
+                ),
             }
         except Exception:
             # Fallback to mock approval if interrupt fails
-            approval = {"approved": True, "reviewer": "mock-reviewer", "comment": "Auto-approved (interrupt fallback)"}
+            approval = {
+                "approved": True,
+                "reviewer": "mock-reviewer",
+                "comment": "Auto-approved (interrupt fallback)",
+            }
     else:
         # Mock approval for offline/CI
-        approval = {"approved": True, "reviewer": "mock-reviewer", "comment": "Auto-approved (mock)"}
+        approval = {
+            "approved": True,
+            "reviewer": "mock-reviewer",
+            "comment": "Auto-approved (mock)",
+        }
 
     return {
         "approval": approval,
-        "messages": [f"approval:{'approved' if approval['approved'] else 'rejected'}"],
-        "events": [make_event("approval", "completed", f"approval: {'approved' if approval['approved'] else 'rejected'}")],
+        "messages": [
+            "approval:"
+            f"{'approved' if approval['approved'] else 'rejected'}"
+        ],
+        "events": [make_event(
+            "approval", "completed",
+            "approval: "
+            f"{'approved' if approval['approved'] else 'rejected'}",
+        )],
     }
 
 
@@ -376,7 +498,11 @@ def retry_or_fallback_node(state: AgentState) -> dict:
         "attempt": attempt,
         "errors": [error_msg],
         "messages": [f"retry:attempt={attempt}"],
-        "events": [make_event("retry", "retry_attempt", f"retry attempt {attempt}", attempt=attempt)],
+        "events": [make_event(
+            "retry", "retry_attempt",
+            f"retry attempt {attempt}",
+            attempt=attempt,
+        )],
     }
 
 
@@ -390,9 +516,13 @@ def dead_letter_node(state: AgentState) -> dict:
     query = state.get("query", "")
 
     final_answer = (
-        f"We were unable to process your request: '{query}' after {attempt} attempt(s) "
-        f"(max: {max_attempts}). This has been escalated to our engineering team for investigation. "
-        "You will receive an update within 24 hours."
+        "We were unable to process your request: "
+        f"'{query}' after {attempt} attempt(s) "
+        f"(max: {max_attempts}). This has been "
+        "escalated to our engineering team "
+        "for investigation. "
+        "You will receive an update "
+        "within 24 hours."
     )
 
     return {

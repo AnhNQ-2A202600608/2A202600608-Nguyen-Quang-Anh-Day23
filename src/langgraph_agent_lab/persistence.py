@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import os
-from typing import Any
 
 
-def build_checkpointer(kind: str = "memory", database_url: str | None = None) -> Any | None:
+def build_checkpointer(
+    kind: str = "memory", database_url: str | None = None,
+) -> object | None:
     """Return a LangGraph checkpointer.
 
     Supports: "none", "memory", "sqlite".
